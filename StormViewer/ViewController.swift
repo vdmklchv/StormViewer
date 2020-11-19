@@ -16,6 +16,7 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Storm Viewer"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Recommend", style: .plain, target: self, action: #selector(shareTapped))
         let fm = FileManager.default // data type to work with fs
         let path = Bundle.main.resourcePath! // sets resource path
         let items = try! fm.contentsOfDirectory(atPath: path) // gets the array of items from the directory under path
@@ -28,7 +29,10 @@ class ViewController: UITableViewController {
         pictures.sort()
     }
     
-    
+    @objc func shareTapped() {
+        let vc = UIActivityViewController(activityItems: [URL(fileURLWithPath: "https://github.com/vdmklchv/StormViewer")], applicationActivities: [])
+        present(vc, animated: true)
+    }
     
     // override default method that defines 0 rows with new method that defines rows in scope of picture count
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
